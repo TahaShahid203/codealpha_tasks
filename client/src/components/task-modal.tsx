@@ -139,11 +139,14 @@ export function TaskModal() {
   };
 
   const handleClose = () => {
+    console.log("Modal closing");
     setIsModalOpen(false);
     setEditingTask(null);
     form.reset();
   };
 
+  console.log("TaskModal render - isModalOpen:", isModalOpen, "editingTask:", editingTask);
+  
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent className="w-full max-w-2xl glassmorphism bg-white/90 dark:bg-slate-800/90 rounded-3xl shadow-2xl p-8 gradient-border">
