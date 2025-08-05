@@ -30,8 +30,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Save, X } from "lucide-react";
+import { Save, X, CalendarIcon } from "lucide-react";
 import { useEffect } from "react";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 const formSchema = insertTaskSchema.extend({
   dueDate: z.string().optional(),
@@ -90,13 +94,16 @@ export function TaskModal() {
   }, [editingTask, isModalOpen, form]);
 
   const onSubmit = (values: FormValues) => {
+    console.log("Form submit - values:", values);
     const taskData = {
       ...values,
       dueDate: values.dueDate || undefined,
     };
+    console.log("Task data:", taskData);
 
     // Check if this is an edit (has an ID) or a new task
     const isEdit = editingTask && editingTask.id;
+    console.log("Is edit:", isEdit);
     
     if (isEdit) {
       updateTaskMutation.mutate(
@@ -149,7 +156,7 @@ export function TaskModal() {
   
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className="w-full max-w-2xl glassmorphism bg-white/90 dark:bg-slate-800/90 rounded-3xl shadow-2xl p-8 gradient-border">
+      <DialogContent className="fixed left-[50%] top-[50%] z-50 w-full max-w-2xl translate-x-[-50%] translate-y-[-50%] glassmorphism bg-white/90 dark:bg-slate-800/90 rounded-3xl shadow-2xl p-8 gradient-border">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
             {editingTask && editingTask.id ? "Edit Task" : "Add New Task"}
@@ -263,13 +270,39 @@ export function TaskModal() {
                     <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300">
                       Due Date
                     </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="datetime-local"
-                        className="w-full px-4 py-3 rounded-xl glassmorphism bg-white/50 dark:bg-slate-700/50 border border-white/20 dark:border-slate-600/50 focus:ring-2 focus:ring-indigo-500"
-                        {...field}
-                      />
-                    </FormControl>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-full px-4 py-3 rounded-xl glassmorphism bg-white/50 dark:bg-slate-700/50 border border-white/20 dark:border-slate-600/50 focus:ring-2 focus:ring-indigo-500 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(new Date(field.value), "PPP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value ? new Date(field.value) : undefined}
+                          onSelect={(date) => {
+                            field.onChange(date ? date.toISOString().slice(0, 10) : "");
+                          }}
+                          disabled={(date) =>
+                            date < new Date(new Date().setHours(0, 0, 0, 0))
+                          }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
                     <FormMessage />
                   </FormItem>
                 )}
