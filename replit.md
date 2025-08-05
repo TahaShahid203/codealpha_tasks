@@ -7,6 +7,7 @@ TaskFlow Pro is a full-stack web application that provides an advanced task mana
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Target Platform: Windows development environment with cross-platform compatibility.
 
 ## System Architecture
 
@@ -43,11 +44,14 @@ The application uses a modular component architecture:
 
 ### Key Features Implementation
 - **Task Management**: CRUD operations with priority levels, categories, and due dates
+- **Calendar Integration**: Visual date picker for due dates using react-day-picker
+- **Modal System**: Centered dialog for task creation/editing with proper form validation
 - **Subtasks**: Nested task structure with individual completion tracking
 - **Search & Filtering**: Real-time search with category and status filters
 - **Drag & Drop**: Task reordering with optimistic updates
 - **Responsive Design**: Mobile-first approach with glassmorphism UI effects
 - **Dark Mode**: Theme switching with persistent preferences
+- **Cross-Platform**: Windows-compatible scripts and development setup
 
 ## External Dependencies
 

@@ -14,7 +14,6 @@ import { type Task, type TaskFilter, type TaskSort } from "@shared/schema";
 import { isToday, isThisWeek, isPast } from "date-fns";
 
 export default function Home() {
-  console.log("Home component rendering...");
   const { data: tasks = [], isLoading } = useTasks();
   const {
     searchQuery,

@@ -94,16 +94,13 @@ export function TaskModal() {
   }, [editingTask, isModalOpen, form]);
 
   const onSubmit = (values: FormValues) => {
-    console.log("Form submit - values:", values);
     const taskData = {
       ...values,
       dueDate: values.dueDate || undefined,
     };
-    console.log("Task data:", taskData);
 
     // Check if this is an edit (has an ID) or a new task
     const isEdit = editingTask && editingTask.id;
-    console.log("Is edit:", isEdit);
     
     if (isEdit) {
       updateTaskMutation.mutate(
@@ -146,13 +143,12 @@ export function TaskModal() {
   };
 
   const handleClose = () => {
-    console.log("Modal closing");
     setIsModalOpen(false);
     setEditingTask(null);
     form.reset();
   };
 
-  console.log("TaskModal render - isModalOpen:", isModalOpen, "editingTask:", editingTask);
+
   
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
