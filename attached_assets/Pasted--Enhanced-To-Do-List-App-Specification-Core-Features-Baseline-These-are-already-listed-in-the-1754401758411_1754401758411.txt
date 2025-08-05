@@ -1,0 +1,104 @@
+🌟 Enhanced To-Do List App Specification
+🧩 Core Features (Baseline)
+These are already listed in the internship PDF:
+
+✅ Add new tasks
+
+✅ Mark tasks as completed
+
+✅ Delete tasks
+
+✅ Edit tasks
+
+✅ Store tasks in localStorage for persistence
+
+🚀 Advanced Features (Standout Additions)
+1. 🗂 Task Categories & Filters
+Create categories/tags (e.g., Work, Study, Personal)
+
+Filter tasks by category or status (All, Pending, Completed)
+
+2. ⏰ Due Dates & Reminders
+Let users set due dates for each task
+
+Color-code tasks (e.g., red for overdue)
+
+Optional: Use setTimeout() or Notification API for browser alerts
+
+3. 📅 Calendar Integration (Mini Calendar View)
+Integrate a calendar UI to view tasks by day/week/month
+
+Highlight days with scheduled tasks
+
+4. 📝 Subtasks / Checklists
+Allow a task to have nested subtasks
+
+Subtasks can also be checked off individually
+
+5. 🧠 Priority Levels
+Let users assign priority: High, Medium, Low
+
+Sort/filter tasks based on priority
+
+Visual cues (e.g., color bars or icons)
+
+6. 🔁 Recurring Tasks
+Set a task to repeat daily, weekly, monthly
+
+7. 🔍 Search & Smart Filtering
+Add a search bar to quickly find tasks by keyword
+
+Combine filters (e.g., "Work + High Priority + Due Today")
+
+8. 🧾 Task History & Activity Log
+Keep a log of added/edited/deleted tasks
+
+Useful for undo actions or reviewing progress
+
+9. 🗃️ Archived Tasks
+Add an option to archive completed tasks instead of deleting them
+
+Show archived tasks in a separate section
+
+10. ☁️ Cloud Sync (Optional for MVP)
+Use Firebase or Supabase to sync tasks across devices (requires login/auth)
+
+Optional offline support with sync when back online
+
+👤 User Experience Features
+11. 🌙 Dark Mode
+Toggle between light and dark themes
+
+Use localStorage to remember user preference
+
+12. ✨ Animations & Transitions
+Smooth animations when adding/deleting/completing tasks
+
+Use CSS transitions or JS animation libraries (e.g., GSAP)
+
+13. 🛠 Drag-and-Drop Task Ordering
+Rearrange task order manually
+
+Use libraries like Sortable.js
+
+14. 📊 Task Stats & Progress Bar
+Display total tasks, completed %, remaining
+
+Optional: Pie chart or progress bar
+
+🔐 Optional Login System (Stretch Feature)
+Simple login using Firebase Auth
+
+Separate task data per user
+
+Great for demonstrating full-stack capabilities
+
+🧪 Bonus Features (For Showcasing Skills)
+Voice Input to add tasks (use SpeechRecognition)
+
+Markdown support in task descriptions
+
+Responsive PWA (Installable app on mobile)
+
+Export to CSV/PDF (for printable task list)
+
