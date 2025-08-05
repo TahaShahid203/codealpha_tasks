@@ -45,34 +45,8 @@ Navigate to `http://localhost:5000`
 
 ## Windows Development Setup
 
-### Option 1: Using cross-env (Recommended)
-The project includes `cross-env` for cross-platform compatibility:
-```bash
-npm run dev
-```
 
-### Option 2: Windows-specific commands
-If you encounter environment variable issues on Windows:
-
-**PowerShell:**
-```powershell
-$env:NODE_ENV="development"; npx tsx server/index.ts
-```
-
-**Command Prompt:**
-```cmd
-set NODE_ENV=development && npx tsx server/index.ts
-```
-
-### Option 3: Create a Windows batch file
-Create `start-dev.bat` in the project root:
-```batch
-@echo off
-set NODE_ENV=development
-npx tsx server/index.ts
-```
-
-Then run:
+run:
 ```bash
 start-dev.bat
 ```
@@ -108,56 +82,8 @@ $env:NODE_ENV="production"; node dist/index.js
 └── dist/                  # Production build
 ```
 
-## Database Setup
 
-The application uses in-memory storage by default for development. For production with PostgreSQL:
 
-1. Set up a PostgreSQL database
-2. Configure environment variables:
-```bash
-DATABASE_URL=postgresql://username:password@localhost:5432/taskflow
-```
-3. Run migrations:
-```bash
-npm run db:push
-```
-
-## Environment Variables
-
-Create a `.env` file in the root directory:
-
-```env
-NODE_ENV=development
-DATABASE_URL=postgresql://localhost:5432/taskflow
-PORT=5000
-```
-
-## Troubleshooting
-
-### Windows PATH Issues
-If you get "command not found" errors:
-1. Ensure Node.js is in your PATH
-2. Use `npx` prefix for commands: `npx tsx server/index.ts`
-3. Install tsx globally: `npm install -g tsx`
-
-### Port Already in Use
-If port 5000 is busy:
-1. Kill the process: `npx kill-port 5000`
-2. Or change the port in `server/index.ts`
-
-### Build Issues
-Clear cache and reinstall:
-```bash
-rm -rf node_modules package-lock.json
-npm install
-```
-
-Windows:
-```cmd
-rmdir /s node_modules
-del package-lock.json
-npm install
-```
 
 ## Contributing
 
@@ -166,7 +92,3 @@ npm install
 3. Make your changes
 4. Test thoroughly
 5. Submit a pull request
-
-## License
-
-MIT License - see LICENSE file for details.
