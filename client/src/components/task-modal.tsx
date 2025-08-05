@@ -65,16 +65,23 @@ export function TaskModal() {
 
   useEffect(() => {
     if (editingTask) {
+      // If the task has an empty ID, it's from quick add
+      const isQuickAdd = !editingTask.id;
       form.reset({
         title: editingTask.title,
         description: editingTask.description || "",
-        category: editingTask.category,
-        priority: editingTask.priority,
-        recurring: editingTask.recurring || "none",
+        category: editingTask.category as "work" | "personal" | "study" | "other",
+        priority: editingTask.priority as "high" | "medium" | "low",
+        recurring: (editingTask.recurring || "none") as "none" | "daily" | "weekly" | "monthly",
         dueDate: editingTask.dueDate 
           ? new Date(editingTask.dueDate).toISOString().slice(0, 16)
           : "",
       });
+      
+      // For quick add, clear the editing task after setting form values
+      if (isQuickAdd) {
+        setEditingTask(null);
+      }
     } else {
       form.reset({
         title: "",
@@ -85,7 +92,7 @@ export function TaskModal() {
         dueDate: "",
       });
     }
-  }, [editingTask, form]);
+  }, [editingTask, form, setEditingTask]);
 
   const onSubmit = (values: FormValues) => {
     const taskData = {
@@ -187,6 +194,7 @@ export function TaskModal() {
                       rows={3}
                       className="w-full px-4 py-3 rounded-xl glassmorphism bg-white/50 dark:bg-slate-700/50 border border-white/20 dark:border-slate-600/50 focus:ring-2 focus:ring-indigo-500 search-glow resize-none"
                       {...field}
+                      value={field.value || ""}
                     />
                   </FormControl>
                   <FormMessage />

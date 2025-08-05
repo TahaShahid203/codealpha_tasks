@@ -64,6 +64,7 @@ export class MemStorage implements IStorage {
     const task: Task = {
       ...insertTask,
       id,
+      description: insertTask.description || null,
       status: "pending",
       subtasks: [],
       createdAt: now,
@@ -98,6 +99,7 @@ export class MemStorage implements IStorage {
       dueDate: updateTask.dueDate ? new Date(updateTask.dueDate) : existingTask.dueDate,
       completedAt: updateTask.status === "completed" && !wasCompleted ? new Date() : 
                    updateTask.status !== "completed" ? null : existingTask.completedAt,
+      subtasks: existingTask.subtasks || [],
     };
 
     this.tasks.set(updateTask.id, updatedTask);
@@ -174,7 +176,7 @@ export class MemStorage implements IStorage {
 
     const updatedTask: Task = {
       ...task,
-      subtasks: [...task.subtasks, subtask],
+      subtasks: [...(task.subtasks || []), subtask],
       updatedAt: new Date(),
     };
 
@@ -188,7 +190,7 @@ export class MemStorage implements IStorage {
       throw new Error("Task not found");
     }
 
-    const updatedSubtasks = task.subtasks.map(subtask =>
+    const updatedSubtasks = (task.subtasks || []).map(subtask =>
       subtask.id === subtaskId
         ? { ...subtask, completed: !subtask.completed }
         : subtask

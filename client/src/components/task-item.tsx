@@ -38,19 +38,19 @@ export function TaskItem({ task }: TaskItemProps) {
   const overdue = task.dueDate && isOverdue(task.dueDate);
   const dueSoon = task.dueDate && isDueSoon(task.dueDate);
 
-  const priorityColors = {
+  const priorityColors: Record<string, string> = {
     high: "border-red-500",
     medium: "border-amber-500",
     low: "border-emerald-500",
   };
 
-  const priorityBadgeColors = {
+  const priorityBadgeColors: Record<string, string> = {
     high: "bg-gradient-to-r from-red-500 to-red-600",
     medium: "bg-gradient-to-r from-amber-500 to-amber-600",
     low: "bg-gradient-to-r from-emerald-500 to-emerald-600",
   };
 
-  const categoryColors = {
+  const categoryColors: Record<string, string> = {
     work: "from-blue-500/20 to-indigo-500/20 text-blue-700 dark:text-blue-300 border-blue-200/50 dark:border-blue-700/50",
     personal: "from-emerald-500/20 to-green-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-200/50 dark:border-emerald-700/50",
     study: "from-purple-500/20 to-pink-500/20 text-purple-700 dark:text-purple-300 border-purple-200/50 dark:border-purple-700/50",
@@ -114,7 +114,7 @@ export function TaskItem({ task }: TaskItemProps) {
   return (
     <div className={cn(
       "task-item glassmorphism bg-white/70 dark:bg-slate-800/70 rounded-2xl p-6 shadow-xl border-l-4 transition-all duration-300",
-      priorityColors[task.priority],
+      priorityColors[task.priority] || "border-gray-300",
       isCompleted && "opacity-60"
     )}>
       <div className="flex items-start space-x-4">
@@ -139,13 +139,13 @@ export function TaskItem({ task }: TaskItemProps) {
             <div className="flex items-center space-x-2">
               <span className={cn(
                 "text-white text-xs font-medium px-3 py-1 rounded-full",
-                priorityBadgeColors[task.priority]
+                priorityBadgeColors[task.priority] || "bg-gray-500"
               )}>
                 {task.priority.toUpperCase()}
               </span>
               <span className={cn(
                 "text-xs font-medium px-3 py-1 rounded-full border bg-gradient-to-r",
-                categoryColors[task.category]
+                categoryColors[task.category] || "from-gray-500/20 to-slate-500/20 text-gray-700 dark:text-gray-300"
               )}>
                 {task.category.charAt(0).toUpperCase() + task.category.slice(1)}
               </span>
@@ -232,9 +232,9 @@ export function TaskItem({ task }: TaskItemProps) {
           </div>
           
           {/* Subtasks */}
-          {(task.subtasks.length > 0 || showSubtaskInput) && (
+          {((task.subtasks && task.subtasks.length > 0) || showSubtaskInput) && (
             <div className="mt-4 space-y-2 border-l-2 border-gray-200 dark:border-gray-700 pl-4">
-              {task.subtasks.map((subtask) => (
+              {(task.subtasks || []).map((subtask) => (
                 <div key={subtask.id} className="flex items-center space-x-3">
                   <Checkbox
                     checked={subtask.completed}

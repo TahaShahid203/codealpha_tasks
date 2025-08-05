@@ -71,8 +71,8 @@ export default function Home() {
     // Apply sorting
     switch (sortBy) {
       case "priority":
-        const priorityOrder = { high: 3, medium: 2, low: 1 };
-        filtered.sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority]);
+        const priorityOrder: Record<string, number> = { high: 3, medium: 2, low: 1 };
+        filtered.sort((a, b) => (priorityOrder[b.priority] || 0) - (priorityOrder[a.priority] || 0));
         break;
       case "dueDate":
         filtered.sort((a, b) => {

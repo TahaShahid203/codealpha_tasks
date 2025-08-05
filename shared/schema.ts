@@ -13,7 +13,7 @@ export const tasks = pgTable("tasks", {
   dueDate: timestamp("due_date"),
   completedAt: timestamp("completed_at"),
   recurring: text("recurring").default("none"), // none, daily, weekly, monthly
-  subtasks: jsonb("subtasks").$type<Subtask[]>().default([]),
+  subtasks: jsonb("subtasks").$type<Subtask[]>().notNull().default([]),
   createdAt: timestamp("created_at").notNull().default(sql`now()`),
   updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
   order: integer("order").notNull().default(0),
@@ -37,6 +37,7 @@ export type Subtask = {
 // Insert schemas
 export const insertTaskSchema = createInsertSchema(tasks, {
   title: z.string().min(1, "Title is required"),
+  description: z.string().optional(),
   category: z.enum(["work", "personal", "study", "other"]),
   priority: z.enum(["high", "medium", "low"]),
   status: z.enum(["pending", "completed", "archived"]),
