@@ -79,24 +79,10 @@ export function Sidebar() {
   const handleQuickAdd = (e: React.FormEvent) => {
     e.preventDefault();
     if (quickTaskTitle.trim()) {
-      // First set the editing task to include the quick title
-      setEditingTask({
-        id: '',
-        title: quickTaskTitle.trim(),
-        description: null,
-        category: 'personal',
-        priority: 'medium',
-        status: 'pending',
-        dueDate: null,
-        completedAt: null,
-        recurring: 'none',
-        subtasks: [],
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        order: 0,
-      });
-      setIsModalOpen(true);
+      // Clear the quick task title and open modal
       setQuickTaskTitle("");
+      setEditingTask(null);
+      setIsModalOpen(true);
     }
   };
 

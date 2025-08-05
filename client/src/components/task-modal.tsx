@@ -64,9 +64,8 @@ export function TaskModal() {
   });
 
   useEffect(() => {
-    if (editingTask) {
-      // If the task has an empty ID, it's from quick add
-      const isQuickAdd = !editingTask.id;
+    if (editingTask && editingTask.id) {
+      // This is an edit operation
       form.reset({
         title: editingTask.title,
         description: editingTask.description || "",
@@ -77,12 +76,8 @@ export function TaskModal() {
           ? new Date(editingTask.dueDate).toISOString().slice(0, 16)
           : "",
       });
-      
-      // For quick add, clear the editing task after setting form values
-      if (isQuickAdd) {
-        setEditingTask(null);
-      }
-    } else {
+    } else if (isModalOpen && !editingTask) {
+      // This is a new task
       form.reset({
         title: "",
         description: "",
@@ -92,7 +87,7 @@ export function TaskModal() {
         dueDate: "",
       });
     }
-  }, [editingTask, form, setEditingTask]);
+  }, [editingTask, isModalOpen, form]);
 
   const onSubmit = (values: FormValues) => {
     const taskData = {
@@ -100,7 +95,10 @@ export function TaskModal() {
       dueDate: values.dueDate || undefined,
     };
 
-    if (editingTask) {
+    // Check if this is an edit (has an ID) or a new task
+    const isEdit = editingTask && editingTask.id;
+    
+    if (isEdit) {
       updateTaskMutation.mutate(
         { id: editingTask.id, ...taskData },
         {
@@ -151,10 +149,10 @@ export function TaskModal() {
       <DialogContent className="w-full max-w-2xl glassmorphism bg-white/90 dark:bg-slate-800/90 rounded-3xl shadow-2xl p-8 gradient-border">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-            {editingTask ? "Edit Task" : "Add New Task"}
+            {editingTask && editingTask.id ? "Edit Task" : "Add New Task"}
           </DialogTitle>
           <DialogDescription className="text-gray-600 dark:text-gray-300">
-            {editingTask ? "Update your task details below." : "Create a new task to stay organized."}
+            {editingTask && editingTask.id ? "Update your task details below." : "Create a new task to stay organized."}
           </DialogDescription>
         </DialogHeader>
 
@@ -317,7 +315,7 @@ export function TaskModal() {
                 className="px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105"
               >
                 <Save className="h-4 w-4 mr-2" />
-                {editingTask ? "Update Task" : "Save Task"}
+                {editingTask && editingTask.id ? "Update Task" : "Save Task"}
               </Button>
             </div>
           </form>
